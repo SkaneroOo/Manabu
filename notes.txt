@@ -1,0 +1,1 @@
+kanji list url: https://res.cloudinary.com/do5vqgzdn/raw/upload/v1727979614/kanji.json
