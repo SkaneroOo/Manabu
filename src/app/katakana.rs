@@ -1,4 +1,4 @@
-use iced::widget::{button, column, row, text, text_input, Space};
+use iced::widget::{button, column, row, text, text_input};
 use iced::Element;
 use wana_kana::ConvertJapanese;
 
@@ -65,47 +65,8 @@ impl Manabu {
                     ]]
                 )
             };
-            let kanji = self.practiced_kanji_entry.as_ref().unwrap();
 
-            let space = Space::with_width(iced::Length::Fill).height(25);
-
-            let kanji_top_text = text("Additional word info:").size(30.0 * self.settings.text_scale).align_x(iced::alignment::Horizontal::Center);
-            
-            let kanji_info_kanji = row![
-                text("Kanji: ").size(20.0 * self.settings.text_scale).align_x(iced::alignment::Horizontal::Center),
-                text(kanji.char.clone()).shaping(iced::widget::text::Shaping::Advanced).size(30.0 * self.settings.text_scale).align_x(iced::alignment::Horizontal::Center)
-            ].align_y(iced::Alignment::Center);
-
-            let kunyomi_reading = row![
-                text("Kunyomi reading: ").size(20.0 * self.settings.text_scale).align_x(iced::alignment::Horizontal::Center),
-                text(kanji.kunyomi.join(", ")).shaping(iced::widget::text::Shaping::Advanced).size(20.0 * self.settings.text_scale).align_x(iced::alignment::Horizontal::Center)
-            ];
-
-            let onyomi_reading = row![
-                text("Onyomi reading: ").size(20.0 * self.settings.text_scale).align_x(iced::alignment::Horizontal::Center),
-                text(kanji.onyomi.join(", ")).shaping(iced::widget::text::Shaping::Advanced).size(20.0 * self.settings.text_scale).align_x(iced::alignment::Horizontal::Center)
-            ];
-
-            let nanori_reading = row![
-                text("Nanori reading: ").size(20.0 * self.settings.text_scale).align_x(iced::alignment::Horizontal::Center),
-                text(kanji.name_readings.join(", ")).shaping(iced::widget::text::Shaping::Advanced).size(20.0 * self.settings.text_scale).align_x(iced::alignment::Horizontal::Center)
-            ];
-
-            let meaning = row![
-                text("Meaning: ").size(20.0 * self.settings.text_scale).align_x(iced::alignment::Horizontal::Center),
-                text(kanji.meanings.join(", ")).size(20.0 * self.settings.text_scale).align_x(iced::alignment::Horizontal::Center)
-            ];
-
-
-            let kanji_info = column![
-                space,
-                kanji_top_text,
-                kanji_info_kanji,
-                kunyomi_reading,
-                onyomi_reading,
-                nanori_reading,
-                meaning
-            ].align_x(iced::Alignment::Center).width(iced::Length::FillPortion(1));
+            let kanji_info = self.get_kanji_info();
 
             let bottom = column![text_top, marked, kanji_info].align_x(iced::Alignment::Center);
             column![
