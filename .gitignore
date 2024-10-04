@@ -3,5 +3,4 @@
 /raw_data
 /scripts
 /.vscode
-.vscode
 justfile
