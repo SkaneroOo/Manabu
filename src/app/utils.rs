@@ -1,5 +1,6 @@
 use std::path::Path;
 
+#[allow(deprecated)]
 use super::constants::hiragana::*;
 use super::{AnswerSample, KanjiEntry, Message, Settings};
 use iced::widget::Row;
@@ -8,6 +9,7 @@ use similar::{ChangeTag, TextDiff};
 
 #[deprecated]
 #[allow(dead_code)]
+#[allow(deprecated)]
 pub fn generate_hiragana(length: usize) -> String {
     let mut random_word = String::new();
     let mut rng = rand::thread_rng();
@@ -40,6 +42,7 @@ pub fn generate_hiragana(length: usize) -> String {
 
 #[deprecated]
 #[allow(dead_code)]
+#[allow(deprecated)]
 pub fn generate_katakana(length: usize) -> String {
     let mut random_word = String::new();
     let mut rng = rand::thread_rng();

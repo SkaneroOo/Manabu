@@ -18,6 +18,9 @@ impl Manabu {
     }
 }
 
+// Most of the code below is taken directly from https://github.com/iced-rs/iced/tree/master/examples/download_progress
+// In the future, it'll be rewritten to allow downloading other files as well
+
 use iced::futures::{SinkExt, Stream, StreamExt};
 use iced::stream::try_channel;
 use iced::Subscription;
@@ -28,7 +31,6 @@ use std::io::Write;
 use std::path::Path;
 use std::sync::Arc;
 
-// Just a little utility function
 pub fn file<I: 'static + Hash + Copy + Send + Sync, T: ToString>(
     id: I,
     url: T,

@@ -1,4 +1,4 @@
-
+#[deprecated]
 pub mod hiragana {
     pub const COMBINING: [u32; 12] = [
         0x304D, // ki

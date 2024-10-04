@@ -9,8 +9,6 @@ use super::Theme;
 use super::Message;
 use super::State;
 
-// use crate::core::App;
-
 
 impl Manabu {
 

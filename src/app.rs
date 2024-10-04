@@ -130,9 +130,6 @@ pub enum ChangedSettings {
     DisplayOnyomi(bool),
     DisplayNanori(bool),
     DisplayMeaning(bool),
-    // ToggleKanaRange,
-    // ChangeMinKanaChars(String),
-    // ChangeMaxKanaChars(String)
 }
 
 impl From<ChangedSettings> for Message {
