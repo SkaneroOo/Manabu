@@ -1,5 +1,5 @@
 use iced::widget::{button, column, progress_bar, row, text, Column};
-use iced::{Element, Font};
+use iced::Element;
 
 use super::utils::ColoredText;
 use super::{Manabu, Message};
@@ -85,7 +85,9 @@ pub enum Progress {
 
 #[derive(Debug, Clone)]
 pub enum Error {
+    #[allow(dead_code)]
     RequestFailed(Arc<reqwest::Error>),
+    #[allow(dead_code)]
     NoContentLength,
 }
 

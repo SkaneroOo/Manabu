@@ -1,5 +1,5 @@
-use iced::widget::{button, column, row, text};
-use iced::{Element, Font};
+use iced::widget::{column, row, text};
+use iced::Element;
 
 use super::{Manabu, Message};
 

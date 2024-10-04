@@ -16,10 +16,6 @@ use serde::{Deserialize, Serialize};
 pub struct Manabu {
     pub input: String,
     pub state: State,
-    #[allow(dead_code)]
-    pub data: Vec<DataEntry>,
-    #[allow(dead_code)]
-    pub index: usize,
     pub kanji_list: Vec<KanjiEntry>,
     pub practiced_word: String,
     pub practiced_kanji_entry: Option<KanjiEntry>,
@@ -33,6 +29,29 @@ pub struct Manabu {
     pub last_download_id: usize,
 }
 
+#[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct AdditionalKanjiInfo {
+    pub display_additional_kanji_info: bool,
+    pub display_kanji: bool,
+    pub display_kunyomi: bool,
+    pub display_onyomi: bool,
+    pub display_nanori: bool,
+    pub display_meaning: bool
+}
+
+impl Default for AdditionalKanjiInfo {
+    fn default() -> Self {
+        AdditionalKanjiInfo {
+            display_additional_kanji_info: true,
+            display_kanji: true,
+            display_kunyomi: true,
+            display_onyomi: true,
+            display_nanori: true,
+            display_meaning: true
+        }
+    }
+}
+
 #[derive(Default, Debug, PartialEq, Eq)]
 pub struct AnswerSample {
     pub text: String,
@@ -40,67 +59,31 @@ pub struct AnswerSample {
 }
 
 #[derive(Serialize, Deserialize)]
+#[serde(default)]
 pub struct Settings {
-    theme: Theme,
-    text_scale: f32,
+    pub theme: Theme,
+    pub text_scale: f32,
+    pub additional_kanji_info: AdditionalKanjiInfo,
 }
 
 impl Default for Settings {
     fn default() -> Self {
         Settings {
             theme: Theme::default(),
-            text_scale: 1.0
+            text_scale: 1.0,
+            additional_kanji_info: AdditionalKanjiInfo::default()
         }
     }
 }
 
 #[derive(Serialize, Deserialize, Default, PartialEq, Eq)]
-enum Theme {
+pub enum Theme {
     #[default]
     System,
     Dark,
     Light,
 }
 
-// #[deprecated]
-// #[derive(Serialize, Deserialize, Copy, Clone)]
-// #[serde(untagged)]
-// enum ConditionalRange {
-//     Single(usize),
-//     Range(usize, usize)
-// }
-
-// impl From<ConditionalRange> for bool {
-//     fn from(c: ConditionalRange) -> Self {
-//         match c {
-//             ConditionalRange::Single(_) => false,
-//             ConditionalRange::Range(_, _) => true
-//         }
-//     }
-// }
-
-// impl Default for ConditionalRange {
-//     fn default() -> Self {
-//         ConditionalRange::Single(5)
-//     }
-// }
-
-// impl ConditionalRange {
-//     pub fn toggle(&mut self) {
-//         if self.to_owned().into() {
-//             *self = ConditionalRange::Single(5);
-//         } else {
-//             *self = ConditionalRange::Range(3, 7);
-//         }
-//     }
-// }
-
-#[derive(Default, Serialize, Deserialize)]
-pub struct DataEntry {
-    jp: String,
-    en: String,
-    kana: Option<String>
-}
 
 #[derive(Default)]
 pub enum State {
@@ -141,9 +124,21 @@ pub enum ChangedSettings {
     ThemeDark,
     TextScale(f32),
     SaveScale,
+    AdditionalKanjiInfo(bool),
+    DisplayKanji(bool),
+    DisplayKunyomi(bool),
+    DisplayOnyomi(bool),
+    DisplayNanori(bool),
+    DisplayMeaning(bool),
     // ToggleKanaRange,
     // ChangeMinKanaChars(String),
     // ChangeMaxKanaChars(String)
+}
+
+impl From<ChangedSettings> for Message {
+    fn from(c: ChangedSettings) -> Self {
+        Message::ChangeSettings(c)
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
