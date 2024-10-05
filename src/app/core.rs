@@ -150,7 +150,6 @@ impl Manabu {
             },
             Message::Download(index) => {
                 if let Some(download) = self.downloads.get_mut(index) {
-                    println!("Starting download");
                     download.start();
                 }
                 iced::Task::none()
@@ -180,11 +179,7 @@ impl Manabu {
     }
 
     pub fn theme(&self) -> iced::Theme {
-        match self.settings.theme {
-            Theme::System => iced::theme::Theme::default(),
-            Theme::Dark => iced::theme::Theme::Dark,
-            Theme::Light => iced::theme::Theme::Light
-        }
+        self.settings.theme.clone().into()
     }
 
     pub fn new() -> (Self, iced::Task<Message>) {
