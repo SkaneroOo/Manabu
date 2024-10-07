@@ -1,77 +1,9 @@
 use std::path::Path;
 
-#[allow(deprecated)]
-use super::constants::hiragana::*;
 use super::{AnswerSample, KanjiEntry, Message, Settings};
 use iced::widget::Row;
-use rand::RngCore;
 use similar::{ChangeTag, TextDiff};
 
-#[deprecated]
-#[allow(dead_code)]
-#[allow(deprecated)]
-pub fn generate_hiragana(length: usize) -> String {
-    let mut random_word = String::new();
-    let mut rng = rand::thread_rng();
-    let mut prev = 0;
-    for i in 0..length {
-        let mut c = rng.next_u32() % (0x3093-0x3040) + 0x3041;
-        if c == CHISAI_TSU && i == length - 1{
-            c += 1;
-        }
-        if CHISAI_YS.contains(&c) && !COMBINING.contains(&prev) {
-            c += 1;
-        }
-        if CHISAI_VOWELS.contains(&c) {
-            c += 1;
-        }
-        if CHISAI_VOWELS.contains(&(c - 1)) && prev == CHISAI_TSU {
-            c += 9;
-        }
-        if prev == CHISAI_TSU && c >= 0x3083 {
-            c -= 17;
-        }
-        if UNUSED_KANA.contains(&c) {
-            c -= 4;
-        }
-        random_word.push(char::from_u32(c).unwrap());
-        prev = c;
-    }
-    random_word
-}
-
-#[deprecated]
-#[allow(dead_code)]
-#[allow(deprecated)]
-pub fn generate_katakana(length: usize) -> String {
-    let mut random_word = String::new();
-    let mut rng = rand::thread_rng();
-    let mut prev = 0;
-    for i in 0..length {
-        let mut c = rng.next_u32() % (0x3093-0x3040) + 0x3041;
-        if c == CHISAI_TSU && i == length - 1{
-            c += 1;
-        }
-        if CHISAI_YS.contains(&c) && !COMBINING.contains(&prev) {
-            c += 1;
-        }
-        if CHISAI_VOWELS.contains(&c) {
-            c += 1;
-        }
-        if CHISAI_VOWELS.contains(&(c - 1)) && prev == CHISAI_TSU {
-            c += 9;
-        }
-        if prev == CHISAI_TSU && c >= 0x3083 {
-            c -= 17;
-        }
-        if UNUSED_KANA.contains(&c) {
-            c -= 4;
-        }
-        random_word.push(char::from_u32(c + 0x60).unwrap());
-        prev = c;
-    }
-    random_word
-}
 
 pub fn load_config() -> Settings {
     let app_path = dirs::config_local_dir().unwrap().join("manabu");
