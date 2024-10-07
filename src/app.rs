@@ -230,9 +230,6 @@ pub enum Message {
 
 #[derive(Debug, Clone)]
 pub enum ChangedSettings {
-    ThemeSystem,
-    ThemeLight,
-    ThemeDark,
     SetTheme(ManabuTheme),
     TextScale(f32),
     SaveScale,

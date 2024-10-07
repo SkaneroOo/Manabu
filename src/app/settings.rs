@@ -101,15 +101,6 @@ impl Manabu {
             ChangedSettings::SetTheme(theme) => {
                 self.settings.theme = theme;
             }
-            ChangedSettings::ThemeSystem => {
-                self.settings.theme = ManabuTheme::default();
-            }
-            ChangedSettings::ThemeLight => {
-                self.settings.theme = ManabuTheme::Light;
-            }
-            ChangedSettings::ThemeDark => {
-                self.settings.theme = ManabuTheme::Dark;
-            }
             ChangedSettings::TextScale(s) => {
                 self.temp_scale = s;
             }

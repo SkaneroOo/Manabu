@@ -5,7 +5,6 @@ use wana_kana::ConvertJapanese;
 use super::no_data::Download;
 use super::utils::{load_config, load_kanji, check_correctness};
 use super::Manabu;
-use super::Theme;
 use super::Message;
 use super::State;
 
