@@ -1,0 +1,19 @@
+# Kana practice rework
+- split into learning and practicing
+  - learning gives user kana and it's reading
+  - practice uses only characters user seen in learning (or manually added to practice)
+- split practice in 3 levels based on how many times user succeded in recognizing character
+  - Level 1 - 0-2 - app displays character, and user have to select correct reading
+  - Level 2 - 3-5 - app displays character, and user have to type reading
+  - Level 3 - 6-X - app displays word using characters user has on level 3
+- if user correctly recognises character first try during practice session, it's counter gets incremented
+- practice session can be attempted every 2 hours, and consists of characters at levels 1 and 2, selected based on past user results
+- when will characters appear:
+  - 0-1 repeat - after 2 hours
+  - 2 repeat - after 4 hours
+  - 3 repeat - after 6 hours
+  - 4 repeat - after 12 hours
+  - 5 repeat - after 24 hours
+- if character wasn't recognised when it was first shown to user during practice session, it'll be shown during next practice, and it's repeat counter won't be increased
+- if user doesn't recognise character 3 times during one session, it's repeat counter gets decreased
+- apart from normal practice session user can use "unlimited practice", where they can practice characters at level 2 and 3 any time for however long they want, but it won't change character repeat counter or level
