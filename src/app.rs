@@ -8,10 +8,11 @@ mod no_data;
 mod loading;
 mod kana;
 
-use std::fmt;
+use std::{fmt, sync::{Arc, Mutex}};
 
 use iced::Theme;
 use no_data::{Download, Error, Progress};
+use rusqlite::Connection;
 use serde::{Deserialize, Serialize};
 
 #[derive(Default)]
@@ -29,6 +30,7 @@ pub struct Manabu {
     pub temp_scale: f32,
     pub downloads: Vec<Download>,
     pub last_download_id: usize,
+    pub db: Option<Arc<Mutex<Connection>>>
 }
 
 #[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -221,6 +223,7 @@ pub enum Message {
     Quit,
     ChangeSettings(ChangedSettings),
     KanjiLoaded(Option<Vec<KanjiEntry>>),
+    DatabaseReady(Arc<Mutex<Connection>>),
     Download(usize),
     DownloadProgressed((usize, Result<Progress, Error>)),
 }

@@ -3,7 +3,7 @@ use iced::Element;
 use wana_kana::ConvertJapanese;
 
 use super::no_data::Download;
-use super::utils::{load_config, load_kanji, check_correctness};
+use super::utils::{check_correctness, load_config, load_kanji, prepare_database};
 use super::Manabu;
 use super::Message;
 use super::State;
@@ -165,6 +165,10 @@ impl Manabu {
                 }
                 iced::Task::none()
             },
+            Message::DatabaseReady(db) => {
+                self.db = Some(db);
+                iced::Task::none()
+            }
             Message::Download(index) => {
                 if let Some(download) = self.downloads.get_mut(index) {
                     download.start();
@@ -205,7 +209,9 @@ impl Manabu {
             temp_scale: cfg.text_scale,
             settings: cfg,
             ..Default::default()
-        }, iced::Task::perform(load_kanji(), Message::KanjiLoaded))
+        }, iced::Task::perform(prepare_database(), Message::DatabaseReady)
+            .chain(iced::Task::perform(load_kanji(), Message::KanjiLoaded))
+        )
     }
 
     

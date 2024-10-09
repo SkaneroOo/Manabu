@@ -1,6 +1,6 @@
 [package]
 name = "manabu"
-version = "0.2.2"
+version = "0.2.3"
 edition = "2021"
 
 [dependencies]
@@ -8,6 +8,7 @@ dirs = "5.0.1"
 iced = { version = "0.13.1", features = ["advanced", "tokio"] }
 rand = "0.8.5"
 reqwest = { version = "0.12.8", features = ["stream", "rustls-tls"] }
+rusqlite = { version = "0.32.1", features = ["bundled"] }
 serde = { version = "1.0.210", features = ["derive"] }
 serde_json = "1.0.128"
 similar = "2.6.0"
@@ -16,3 +17,4 @@ wana_kana = "4.0.0"
 [profile.release]
 lto = true
 codegen-units = 1
+strip = true
