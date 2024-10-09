@@ -53,7 +53,7 @@ fn download(url: String) -> impl Stream<Item = Result<Progress, Error>> {
 
         let response = reqwest::get(&url).await?;
         // let total = response.content_length().ok_or(Error::NoContentLength)?;
-        let total = 3218155;
+        let total = 2102631;
         
         let _ = output.send(Progress::Downloading { percent: 0.0 }).await;
         
@@ -155,7 +155,7 @@ impl Download {
     pub fn subscription(&self) -> Subscription<Message> {
         match self.state {
             State::Downloading { .. } => {
-                file(self.id, "https://res.cloudinary.com/do5vqgzdn/raw/upload/v1727979614/kanji.json")
+                file(self.id, "https://res.cloudinary.com/do5vqgzdn/raw/upload/v1728465813/kanji.min.json")
                     .map(Message::DownloadProgressed)
             }
             _ => Subscription::none(),

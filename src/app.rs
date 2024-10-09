@@ -1,13 +1,12 @@
 mod core;
 mod menu;
-mod hiragana;
-mod katakana;
 mod constants;
 mod utils;
 mod settings;
 mod app_ext;
 mod no_data;
 mod loading;
+mod kana;
 
 use std::fmt;
 
@@ -215,10 +214,8 @@ pub enum Message {
     StartHiragana,
     StartKatakana,
     Menu,
-    CheckAnswerHiragana,
-    CheckAnswerKatakana,
-    NewHiragana,
-    NewKatakana,
+    NewKana,
+    CheckAnswerKana,
     Settings,
     SubmitAnswer,
     Quit,

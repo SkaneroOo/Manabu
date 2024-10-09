@@ -1,4 +1,4 @@
-use iced::widget::{button, column, row, text, text_input};
+use iced::widget::{button, column, row, text, text_input, Row};
 use iced::Element;
 use wana_kana::ConvertJapanese;
 
@@ -6,11 +6,32 @@ use super::utils::ColoredText;
 use super::{Manabu, Message};
 
 impl Manabu {
-    pub fn view_hiragana(&self) -> Element<Message> {
+    pub fn view_kana(&self) -> Element<Message> {
         let back = button(text("Back").size(30.0 * self.settings.text_scale)).on_press(Message::Menu);
+        
+        
+        let main_body = self.kana_lvl_3();
+
+        column![
+            back,
+            main_body
+        ].padding(10).into()
+    }
+
+    #[allow(dead_code)]
+    fn kana_lvl_1(&self) -> Row<Message> {
+        todo!()
+    }
+
+    #[allow(dead_code)]
+    fn kana_lvl_2(&self) -> Row<Message> {
+        todo!()
+    }
+
+    fn kana_lvl_3(&self) -> Row<Message> {
         let button_row = row![
-            button(text("Check answer").size(30.0 * self.settings.text_scale)).on_press(Message::CheckAnswerHiragana).style(iced::widget::button::primary).padding(30),
-            button(text("Next").size(30.0 * self.settings.text_scale)).on_press(Message::NewHiragana).style(iced::widget::button::primary).padding(30)
+            button(text("Check answer").size(30.0 * self.settings.text_scale)).on_press(Message::CheckAnswerKana).style(iced::widget::button::primary).padding(30),
+            button(text("Next").size(30.0 * self.settings.text_scale)).on_press(Message::NewKana).style(iced::widget::button::primary).padding(30)
         ].spacing(10);
 
         let write_word_text = text("Write the word below:").size(30.0 * self.settings.text_scale).align_x(iced::alignment::Horizontal::Center);
@@ -75,14 +96,9 @@ impl Manabu {
             ].align_x(iced::Alignment::Center).height(iced::Length::Fill).width(iced::Length::Fill).spacing(10)
         };
         
-        let main_body = row![
+        row![
             col
-        ].align_y(iced::Alignment::Center).width(iced::Length::Fill).height(iced::Length::Fill);
-
-        column![
-            back,
-            main_body
-        ].padding(10).into()
+        ].align_y(iced::Alignment::Center).width(iced::Length::Fill).height(iced::Length::Fill)
     }
 }
 

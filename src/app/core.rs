@@ -27,10 +27,10 @@ impl Manabu {
                 self.view_menu()
             },
             State::Hiragana => {
-                self.view_hiragana()
+                self.view_kana()
             },
             State::Katakana => {
-                self.view_katakana()
+                self.view_kana()
             },
             State::Settings => {
                 self.view_settings()
@@ -65,34 +65,52 @@ impl Manabu {
                 self.input = String::new();
                 iced::Task::none()
             },
-            Message::NewHiragana => {
+            // Message::NewHiragana => {
+            //     self.select_random_word();
+            //     self.practiced_word = self.practiced_word.to_hiragana();
+            //     self.correct_answer = None;
+            //     self.input = String::new();
+            //     iced::Task::none()
+            // },
+            // Message::CheckAnswerHiragana => {
+            //     let ans = check_correctness(&self.input, &self.practiced_word.to_romaji());
+            //     self.correct_answer = Some(ans.0);
+            //     self.correct_answer_marked_samples = ans.1;
+            //     self.user_answer_marked_samples = ans.2;
+            //     iced::Task::none()
+            // },
+            Message::NewKana => {
                 self.select_random_word();
-                self.practiced_word = self.practiced_word.to_hiragana();
+                self.practiced_word = match self.state {
+                    State::Hiragana => self.practiced_word.to_hiragana(),
+                    State::Katakana => self.practiced_word.to_katakana(),
+                    _ => unreachable!()
+                };
                 self.correct_answer = None;
                 self.input = String::new();
                 iced::Task::none()
             },
-            Message::CheckAnswerHiragana => {
+            Message::CheckAnswerKana => {
                 let ans = check_correctness(&self.input, &self.practiced_word.to_romaji());
                 self.correct_answer = Some(ans.0);
                 self.correct_answer_marked_samples = ans.1;
                 self.user_answer_marked_samples = ans.2;
                 iced::Task::none()
             },
-            Message::NewKatakana => {
-                self.select_random_word();
-                self.practiced_word = self.practiced_word.to_katakana();
-                self.correct_answer = None;
-                self.input = String::new();
-                iced::Task::none()
-            },
-            Message::CheckAnswerKatakana => {
-                let ans = check_correctness(&self.input, &self.practiced_word.to_romaji());
-                self.correct_answer = Some(ans.0);
-                self.correct_answer_marked_samples = ans.1;
-                self.user_answer_marked_samples = ans.2;
-                iced::Task::none()
-            },
+            // Message::NewKatakana => {
+            //     self.select_random_word();
+            //     self.practiced_word = self.practiced_word.to_katakana();
+            //     self.correct_answer = None;
+            //     self.input = String::new();
+            //     iced::Task::none()
+            // },
+            // Message::CheckAnswerKatakana => {
+            //     let ans = check_correctness(&self.input, &self.practiced_word.to_romaji());
+            //     self.correct_answer = Some(ans.0);
+            //     self.correct_answer_marked_samples = ans.1;
+            //     self.user_answer_marked_samples = ans.2;
+            //     iced::Task::none()
+            // },
             Message::SubmitAnswer => {
                 match (&self.state, self.correct_answer) {
                     (State::Hiragana, Some(_)) => {

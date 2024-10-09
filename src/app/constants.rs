@@ -1,10 +1,12 @@
 
 pub mod kana {
+    #[allow(dead_code)]
     pub struct Kana {
         pub romanji: &'static str,
         pub kana: &'static str
     }
     
+    #[allow(dead_code)]
     pub const HIRAGANA: [Kana; 46] = [
         Kana { romanji: "a", kana: "あ" },
         Kana { romanji: "i", kana: "い" },
@@ -54,6 +56,7 @@ pub mod kana {
         Kana { romanji: "n", kana: "ん" }
     ];
 
+    #[allow(dead_code)]
     pub const KATAKANA: [Kana; 46] = [
         Kana { romanji: "a", kana: "ア" },
         Kana { romanji: "i", kana: "イ" },
