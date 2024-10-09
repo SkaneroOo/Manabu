@@ -167,7 +167,7 @@ impl Manabu {
             },
             Message::DatabaseReady(db) => {
                 self.db = Some(db);
-                iced::Task::none()
+                iced::Task::perform(load_kanji(), Message::KanjiLoaded)
             }
             Message::Download(index) => {
                 if let Some(download) = self.downloads.get_mut(index) {
@@ -209,9 +209,7 @@ impl Manabu {
             temp_scale: cfg.text_scale,
             settings: cfg,
             ..Default::default()
-        }, iced::Task::perform(prepare_database(), Message::DatabaseReady)
-            .chain(iced::Task::perform(load_kanji(), Message::KanjiLoaded))
-        )
+        }, iced::Task::perform(prepare_database(), Message::DatabaseReady))
     }
 
     

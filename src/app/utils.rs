@@ -172,28 +172,29 @@ pub async fn load_kanji() -> Option<Vec<KanjiEntry>> {
 pub async fn prepare_database() -> Arc<Mutex<Connection>> {
     let app_path = dirs::config_local_dir().unwrap().join("manabu");
     let db_path = app_path.join("appdata.db");
+    println!("Opening database at {}", db_path.display());
     let conn = Connection::open(db_path).unwrap();
     conn.execute("PRAGMA foreign_keys=ON", []).unwrap();
 
     conn.execute(r#"
         CREATE TABLE IF NOT EXISTS hiragana (
-            character TEXT NOT NULL,
-            reading TEXT NOT NULL,
-            repeat INTEGER NOT NULL DEFAULT 0,
-            last_repeat DATETIME NOT NULL DEFAULT 2000-01-01 00:00:00,
-            is_unlocked INTEGER NOT NULL DEFAULT 0,
-            PRIMARY KEY (character)
+            `character` TEXT NOT NULL,
+            `reading` TEXT NOT NULL,
+            `repeat` INTEGER NOT NULL DEFAULT 0,
+            `last_repeat` DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
+            `is_unlocked` INTEGER NOT NULL DEFAULT 0,
+            PRIMARY KEY (`character`)
         )
     "#, []).unwrap();
 
     conn.execute(r#"
         CREATE TABLE IF NOT EXISTS katakana (
-            character TEXT NOT NULL,
-            reading TEXT NOT NULL,
-            repeat INTEGER NOT NULL DEFAULT 0,
-            last_repeat DATETIME NOT NULL DEFAULT 2000-01-01 00:00:00,
-            is_unlocked INTEGER NOT NULL DEFAULT 0,
-            PRIMARY KEY (character)
+            `character` TEXT NOT NULL,
+            `reading` TEXT NOT NULL,
+            `repeat` INTEGER NOT NULL DEFAULT 0,
+            `last_repeat` DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
+            `is_unlocked` INTEGER NOT NULL DEFAULT 0,
+            PRIMARY KEY (`character`)
         )
     "#, []).unwrap();
 
@@ -205,6 +206,7 @@ pub async fn prepare_database() -> Arc<Mutex<Connection>> {
         }
     }
 
+
     let katakana_count: usize = conn.query_row("Select count(*) from katakana", [], |row| row.get(0)).unwrap();
 
     if katakana_count == 0 {
@@ -212,6 +214,7 @@ pub async fn prepare_database() -> Arc<Mutex<Connection>> {
             conn.execute("INSERT INTO katakana (character, reading) VALUES (?1, ?2)", [character.kana, character.romaji]).unwrap();
         }
     }
+
 
     Arc::new(Mutex::new(conn))
 }
